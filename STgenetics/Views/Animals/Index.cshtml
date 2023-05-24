@@ -61,7 +61,7 @@
 
 <hr />
 
-<table class="table">
+<table class="table" id="animalTable">
     <thead>
         <tr>
             <th class="text-center">
@@ -135,8 +135,25 @@
     });
 </script>
 
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script>
+            $(document).ready(function () {
+                $('#animalTable').DataTable({
+                    "paging": true,
+                    "pageLength": 10, // Número de elementos por página
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+                    }
+                });
+            });
+        </script>
     }
 }
