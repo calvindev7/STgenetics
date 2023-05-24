@@ -11,7 +11,7 @@ namespace STgenetics.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaNacimiento { get; set; }
         public string Sexo { get; set; }
-        public float Precio { get; set; }
+        public decimal Precio { get; set; }
         public string Estado { get; set; }
     }
 }

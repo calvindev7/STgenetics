@@ -61,77 +61,107 @@
 
 <hr />
 
-<table class="table" id="animalTable">
-    <thead>
-        <tr>
-            <th class="text-center">
-                Nombre
-            </th>
-            <th class="text-center">
-                Raza
-            </th>
-            <th class="text-center">
-                Fecha de Nacimiento
-            </th>
-            <th class="text-center">
-                Sexo
-            </th>
-            <th class="text-center">
-                Precio
-            </th>
-            <th class="text-center">
-                Estado
-            </th>
-            <th class="text-center">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Animales)
-        {
+<form asp-action="ProcesarPedido" asp-controller="Animals" method="post">
+    <table class="table" id="animalTable">
+        <thead>
             <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Raza)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.FechaNacimiento)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Sexo)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td class="text-center">
-                    <a asp-action="Edit" asp-route-id="@item.AnimalId" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="bi bi-pencil"></i></a>
-                    <a asp-action="Details" asp-route-id="@item.AnimalId" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles"><i class="bi bi-info-circle"></i></a>
-                    <a asp-action="Delete" asp-route-id="@item.AnimalId" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="bi bi-trash"></i></a>
+                <th class="text-center">Selección</th>
+                <th class="text-center">
+                    Nombre
+                </th>
+                <th class="text-center">
+                    Raza
+                </th>
+                <th class="text-center">
+                    Fecha de Nacimiento
+                </th>
+                <th class="text-center">
+                    Sexo
+                </th>
+                <th class="text-center">
+                    Precio
+                </th>
+                <th class="text-center">
+                    Estado
+                </th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Animales)
+            {
+                <tr>
+                    <td>
+                        <div class="form-check text-center">
+                            <input class="form-check-input" type="checkbox" name="animalIds" value="@item.AnimalId" id="animal-@item.AnimalId">
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Raza)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Sexo)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.AnimalId" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="bi bi-pencil"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.AnimalId" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles"><i class="bi bi-info-circle"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.AnimalId" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <th class="text-center">
+                    Total: @Model.Animales.Sum(a => a.Precio)
+                </th>
+                <td colspan="2"></td>
+                <td class="text-end">
+                    <input type="submit" value="Agregar al carrito" id="submitButton" class="btn btn-success" disabled />
                 </td>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4"></td>
-            
-            <th class="text-center">
-                Total: @Model.Animales.Sum(a => a.Precio)
-            </th>
-            <td colspan="2"></td>
-        </tr>
-    </tfoot>
-</table>
+        </tfoot>
+    </table>
+</form>
 
 
 <script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+    function validarSeleccion() {
+        var checkboxes = document.getElementsByName("animalIds");
+        var submitButton = document.getElementById("submitButton");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                submitButton.disabled = false;
+                return;
+            }
+        }
+
+        submitButton.disabled = true;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        var checkboxes = document.getElementsByName("animalIds");
+        var submitButton = document.getElementById("submitButton");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener("change", validarSeleccion);
+        }
+
+        validarSeleccion();
     });
 </script>
 
@@ -155,5 +185,12 @@
                 });
             });
         </script>
+        <script>
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        </script>
+        
     }
 }

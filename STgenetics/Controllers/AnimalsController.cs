@@ -6,6 +6,7 @@ using STgenetics.Models;
 public class AnimalsController : Controller
 {
     private readonly STgeneticsContext _context;
+    private List<Animal> animalesSeleccionados = new List<Animal>();
 
     public AnimalsController(STgeneticsContext context)
     {
@@ -158,5 +159,68 @@ public class AnimalsController : Controller
     private bool AnimalExists(int id)
     {
         return (_context.Animal?.Any(e => e.AnimalId == id)).GetValueOrDefault();
+    }
+
+    [HttpPost]
+    public ActionResult ProcesarPedido(List<int> animalIds)
+    {
+        foreach (int id in animalIds)
+        {
+            Animal animal = _context.Animal.FirstOrDefault(a => a.AnimalId == id);
+            if (animal != null)
+            {
+                animalesSeleccionados.Add(animal);
+            }
+        }
+
+        // Verificación de duplicados en el pedido
+        var animalesDuplicados = animalesSeleccionados
+            .GroupBy(a => a.Raza)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+
+        if (animalesDuplicados.Any())
+        {
+            ModelState.AddModelError("", "No se permite duplicar el animal en el pedido.");
+            return RedirectToAction("Index");
+        }
+
+        // Cálculos de descuentos y envío
+        decimal totalCompra = animalesSeleccionados.Sum(a => a.Precio);
+        decimal descuentoAnimal = 0;
+        decimal descuentoAdicional = 0;
+        decimal envio = 0;
+
+        if (animalesSeleccionados.Count > 5)
+        {
+            descuentoAnimal = totalCompra * 0.05m;
+        }
+
+        if (animalesSeleccionados.Count > 10)
+        {
+            descuentoAdicional = totalCompra * 0.03m;
+        }
+
+        if (animalesSeleccionados.Count > 20)
+        {
+            envio = 0;
+        }
+        else
+        {
+            envio = 1000;
+        }
+
+        PedidoViewModel pedido = new PedidoViewModel
+        {
+            AnimalesSeleccionados = animalesSeleccionados,
+            TotalCompra = totalCompra,
+            DescuentoAnimal = descuentoAnimal,
+            DescuentoAdicional = descuentoAdicional,
+            Envio = envio,
+            TotalPedido = totalCompra - descuentoAnimal - descuentoAdicional + envio
+        };
+
+        return View("ResumenPedido", pedido);
     }
 }
