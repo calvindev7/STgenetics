@@ -1,6 +1,5 @@
 # Sistema de Gestión de Compras de Animales
 
-![Animales](/path/to/animal-image.jpg)
 
 ## Descripción
 Este proyecto es un sistema de gestión de compras de animales que permite a los clientes explorar y adquirir animales de diferentes razas. Proporciona una interfaz intuitiva y fácil de usar para realizar pedidos y generar detalles de facturación.
