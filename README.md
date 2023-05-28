@@ -1,59 +1,59 @@
-# Sistema de Gestión de Compras de Animales
+# Animal Purchasing Management System
 
 
-## Descripción
-Este proyecto es un sistema de gestión de compras de animales que permite a los clientes explorar y adquirir animales de diferentes razas. Proporciona una interfaz intuitiva y fácil de usar para realizar pedidos y generar detalles de facturación.
+## Description
+This project is an animal purchasing management system that allows customers to explore and acquire animals of different breeds. It provides an intuitive and user-friendly interface for placing orders and generating billing details.
 
-## Características principales
-- Búsqueda y selección de animales por raza, sexo y estado.
-- Agregado de animales al carrito de compras.
-- Aplicación automática de descuentos según reglas de negocio.
-- Cálculo del costo de envío en función del número de animales.
-- Generación de detalles de facturación con información detallada del pedido.
-- Modal de agradecimiento al finalizar la compra.
+## Key Features
+- Search and selection of animals by breed, gender, and status.
+- Adding animals to the shopping cart.
+- Automatic application of discounts based on business rules.
+- Calculation of shipping cost based on the number of animals.
+- Generation of billing details with comprehensive order information.
+- Thank you modal upon completing the purchase.
 
-## Tecnologías utilizadas
+## Technologies Used
 - ASP.NET Core
-- HTML, CSS y JavaScript
+- HTML, CSS, and JavaScript
 - Bootstrap
 - DataTables
 - Entity Framework Core
 
-## Configuración y ejecución del proyecto
-1. Clona el repositorio del proyecto desde GitHub.
-2. Abre el proyecto en tu entorno de desarrollo preferido (por ejemplo, Visual Studio).
-3. Asegúrate de tener las dependencias y herramientas necesarias instaladas, como el SDK de .NET Core.
-4. Configura la conexión a la base de datos en el archivo `appsettings.json` según tus necesidades. Aquí tienes un ejemplo:
+## Project Setup and Execution
+1. Clone the project repository from GitHub.
+2. Open the project in your preferred development environment (e.g., Visual Studio).
+3. Make sure you have the necessary dependencies and tools installed, such as the .NET Core SDK.
+4. Configure the database connection in the `appsettings.json` file according to your needs. Here's an example:
 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=NombreBaseDeDatos;User=Usuario;Password=Contraseña;"
+    "DefaultConnection": "Server=localhost;Database=DatabaseName;User=User;Password=Password;"
   }
 }
 ```
-5. Ejecuta las migraciones para crear la base de datos y las tablas necesarias. Utiliza el siguiente comando:
+5. Run the migrations to create the necessary database and tables. Use the following command:
 
 ```shell
 dotnet ef database update
 ```
 
-6. Compila y ejecuta la aplicación. Utiliza el siguiente comando:
+6. Build and run the application. Use the following command:
 
 ```shell
-dotnet ef database update
+dotnet run
 ```
 
-## Contribución
-Si deseas contribuir a este proyecto, sigue estos pasos:
-1. Realiza un fork del repositorio.
-2. Crea una rama con un nombre descriptivo para tu función o corrección de errores.
-3. Realiza los cambios en tu rama y asegúrate de que el código sea coherente con las convenciones del proyecto.
-4. Envía una solicitud de extracción explicando los cambios realizados y su propósito.
+## Contribution
+If you would like to contribute to this project, follow these steps:
+1. Fork the repository.
+2. Create a branch with a descriptive name for your feature or bug fix.
+3. Make the changes in your branch and ensure the code is consistent with the project's conventions.
+4. Submit a pull request explaining the changes made and their purpose.
 
-Agradecemos cualquier contribución que ayude a mejorar este sistema de gestión de compras de animales.
+We appreciate any contributions that help improve this animal purchasing management system.
 
-## Soporte
-Si tienes alguna pregunta, problema o sugerencia relacionada con este proyecto, no dudes en abrir un nuevo problema en el repositorio de GitHub. Estaremos encantados de ayudarte.
+## Support
+If you have any questions, issues, or suggestions related to this project, feel free to open a new issue on the GitHub repository. We'll be happy to assist you.
 
-¡Gracias por tu interés y apoyo en este proyecto de gestión de compras de animales!
+Thank you for your interest and support in this animal purchasing management project!
